@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Timelines.Core.Exceptions;
+﻿using Timelines.Core.Exceptions;
 
 namespace Timelines.Core
 {
@@ -18,12 +13,6 @@ namespace Timelines.Core
 			Title = string.Empty;
 		}
 
-		public Node(string title)
-		{
-			Children = [];
-			Title = title;
-		}
-
 		public void AddChild(Node child)
 		{
 			if (Children.ContainsKey(child.Title))
@@ -32,16 +21,6 @@ namespace Timelines.Core
 			}
 
 			Children.Add(child.Title, child);
-		}
-
-		public void AddChild(string nodeTitle)
-		{
-			if (Children.ContainsKey(nodeTitle))
-			{
-				throw new ChildAlreadyExistsException("Cannot add existent child to node.");
-			}
-
-			Children.Add(nodeTitle, new Node(nodeTitle));
 		}
 
 		public void RemoveChild(string nodeTitle)
