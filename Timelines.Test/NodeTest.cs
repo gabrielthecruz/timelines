@@ -1,5 +1,3 @@
-using NuGet.Frameworks;
-using System.Xml.Linq;
 using Timelines.Core;
 using Timelines.Core.Exceptions;
 
@@ -9,50 +7,33 @@ namespace Timelines.Test
 	{
 		private readonly Node RootNode;
 
-		public NodeTest() => RootNode = new Node("Root node");
+		public NodeTest() => RootNode = new Node { Title = "Root node" };
 
 		[Fact]
-		public void AddChildByNode()
+		public void AddChild()
 		{
-			var node = new Node("Test Node");
+			var node = new Node { Title = "Test Node" };
 			RootNode.AddChild(node);
 
 			Assert.Single(RootNode.Children);
 		}
 
 		[Fact]
-		public void AddDuplicatedChildByNode()
+		public void AddDuplicatedChild()
 		{
-			var node = new Node("Test Node");
+			var node = new Node{ Title = "Test Node" };
 			RootNode.AddChild(node);
 
 			Assert.Throws<ChildAlreadyExistsException>(() => RootNode.AddChild(node));
 		}
 
 		[Fact]
-		public void AddChildByTitle()
+		public void RemoveChild()
 		{
-			RootNode.AddChild("Test Node");
+			var node = new Node { Title = "Test Node" };
 
-			Assert.Single(RootNode.Children);
-		}
-
-		[Fact]
-		public void AddDuplicatedChildByTitle()
-		{
-			var nodeTitle = "Test Node";
-			RootNode.AddChild(nodeTitle);
-
-			Assert.Throws<ChildAlreadyExistsException>(() => RootNode.AddChild(nodeTitle));
-		}
-
-		[Fact]
-		public void RemoveChildByTitle()
-		{
-			var nodeTitle = "Test Node";
-
-			RootNode.AddChild(nodeTitle);
-			RootNode.RemoveChild(nodeTitle);
+			RootNode.AddChild(node);
+			RootNode.RemoveChild(node.Title);
 
 			Assert.Empty(RootNode.Children);
 		}
